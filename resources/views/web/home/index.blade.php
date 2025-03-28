@@ -51,12 +51,12 @@
                         <div class="col-md-3 col-sm-6 col-xs-6">
                             <div class="course">
                                 <a href="{{ url("skills/show/$skill->id") }}" class="course-img">
-                                    <img src="{{ asset('uploads/skills/1.png') }}" alt="">
+                                    <img src="{{ asset("storage/uploads/$skill->img") }}" alt="">
                                     <i class="course-link-icon fa fa-link"></i>
                                 </a>
                                 <a class="course-title" href="#">{{ $skill->name() }}</a>
                                 <div class="course-details">
-                                    <span class="course-category">{{ $skill->cat }}</span>
+                                    <span class="course-category">{{ $skill->cat->name() }}</span>
                                 </div>
                             </div>
                         </div>

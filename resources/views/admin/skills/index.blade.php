@@ -64,7 +64,7 @@
                                                 <td>{{ $skill->name('en') }}</td>
                                                 <td style="direction: rtl;">{{ $skill->name('ar') }}</td>
                                                 <td>
-                                                    <img src="{{ asset("uploads/$skill->img") }}" height="50px" alt="">
+                                                    <img src="{{ asset("storage/uploads/$skill->img") }}" height="50px" alt="">
                                                 </td>
                                                 <td>{{ $skill->cat->name('en') }}</td>
                                                 <td>

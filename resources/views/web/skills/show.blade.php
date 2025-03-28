@@ -50,7 +50,7 @@
                                 <div class="single-blog">
                                     <div class="blog-img">
                                         <a href="{{url("exams/show/$exam->id")}}">
-                                            <img src="{{ asset("uploads/$exam->img") }}" alt="">
+                                            <img src="{{ asset("storage/uploads/$exam->img") }}" alt="">
                                         </a>
                                     </div>
                                     <h4><a href="{{url("exams/show/$exam->id")}}">{{$exam->name()}}</a></h4>

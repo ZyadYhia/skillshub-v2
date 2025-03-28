@@ -64,7 +64,7 @@
                                                 <td>{{ $exam->name('en') }}</td>
                                                 <td style="direction: rtl;">{{ $exam->name('ar') }}</td>
                                                 <td>
-                                                    <img src="{{ asset("uploads/$exam->img") }}" height="50px" alt="">
+                                                    <img src="{{ asset("storage/uploads/$exam->img") }}" height="50px" alt="">
                                                 </td>
                                                 <td>{{ $exam->skill->name('en') }}</td>
                                                 <td>{{ $exam->questions_no }}</td>

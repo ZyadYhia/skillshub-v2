@@ -77,7 +77,7 @@
                                         <tr>
                                             <th>Image</th>
                                             <td>
-                                                <img height="50px" src="{{ asset("uploads/$exam->img") }}" alt="">
+                                                <img height="50px" src="{{ asset("storage/uploads/$exam->img") }}" alt="">
                                             </td>
                                         </tr>
                                         <tr>
