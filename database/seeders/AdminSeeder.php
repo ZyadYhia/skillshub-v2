@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RolesEnum;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,7 +22,6 @@ class AdminSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('123123123'),
-        ])->assignRole(['superadmin', 'admin'])
-        ->givePermissionTo(['can enter dashboard', 'can enter exam']);
+        ])->assignRole([RolesEnum::SUPERADMIN, RolesEnum::ADMIN]);
     }
 }

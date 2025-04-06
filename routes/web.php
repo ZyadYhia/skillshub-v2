@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\admin\Authorization\PermissionController;
+use App\Http\Controllers\admin\Authorization\RoleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MessageController;
@@ -84,7 +86,8 @@ Route::prefix('dashboard')->middleware(['auth', 'verified', 'can:can enter dashb
         Route::get('admins/demote/{id}', [AdminController::class, 'demote']);
         Route::get('admins/delete/{user}', [AdminController::class, 'delete']);
     });
-
+    Route::get('roles', [RoleController::class, 'index']);
+    Route::get('permissions', [PermissionController::class, 'index']);
     Route::get('messages', [MessageController::class, 'index']);
     Route::get('messages/show/{message}', [MessageController::class, 'show']);
     Route::post('messages/response/{message}', [MessageController::class, 'response']);
