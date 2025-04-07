@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\web;
 
+use App\Enums\RolesEnum;
 use App\Models\Message;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Notifications\MessageNotification;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -29,21 +32,22 @@ class ContactController extends Controller
             $errors = $validator->errors();
             return redirect(url('contact'))->withErrors($errors);
         }
-        //for ajax
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'email' => 'required|string|max:255',
-        //     'subject' => 'nullable|string|max:255',
-        //     'body' => 'required|string',
-        // ]);
         Message::create([
             'name' => $request->name,
             'email' => $request->email,
             'subject' => $request->subject,
             'body' => $request->body,
         ]);
-        // $data = ['success'=>'Message sent successfult'];
-        // return response()->json($data);
+        $users = User::role([RolesEnum::SUPERADMIN, RolesEnum::ADMIN])->get();
+        foreach ($users as $user) {
+            $user->notify(new MessageNotification(
+                $user->name,
+                $request->name,
+                $request->email,
+                $request->subject,
+                $request->body
+            ));
+        }
         $request->session()->flash('success', 'Message sent successfult');
         return back();
     }
