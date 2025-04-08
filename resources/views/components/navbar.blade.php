@@ -9,7 +9,6 @@
             <ul class="dropdown-menu">
                 @foreach ($cats as $cat)
                     <li><a href="{{ url("categories/show/$cat->id") }}">{{ $cat->name() }}</a></li>
-
                 @endforeach
             </ul>
         </li>
@@ -20,7 +19,7 @@
         @endguest
         @auth
             @role('admin')
-            <li><a href="{{ url('dashboard') }}">{{ __('web.dashboard') }}</a></li>
+                <li><a href="{{ url('dashboard') }}">{{ __('web.dashboard') }}</a></li>
             @endrole
 
             <li><a href="{{ url('profile') }}">{{ __('web.profile') }}</a></li>

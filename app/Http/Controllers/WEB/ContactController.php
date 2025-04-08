@@ -41,7 +41,6 @@ class ContactController extends Controller
         $users = User::role([RolesEnum::SUPERADMIN, RolesEnum::ADMIN])->get();
         foreach ($users as $user) {
             $user->notify(new MessageNotification(
-                $user->name,
                 $request->name,
                 $request->email,
                 $request->subject,
