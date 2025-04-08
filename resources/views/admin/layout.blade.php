@@ -52,6 +52,51 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                 </li>
             </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-bell"></i>
+                        @if (Auth::user()->unreadNotifications->count() > 0)
+                            <span class="badge badge-warning navbar-badge">
+                                {{ Auth::user()->unreadNotifications->count() }}
+                            </span>
+                        @endif
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right">
+
+                        @if (Auth::user()->unreadNotifications->count() > 0)
+                            <span class="dropdown-item dropdown-header">
+                                {{ Auth::user()->unreadNotifications->count() }} Notifications
+                            </span>
+                        @endif
+                        <div class="dropdown-divider"></div>
+                        @foreach (Auth::user()->unreadNotifications as $notification)
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-envelope mr-2"></i>
+                                {{ $notification->data['subject'] }}
+                                <span class="float-right text-muted text-sm">
+                                    {{ $notification->created_at->diffForHumans(\Carbon\Carbon::now()) }}
+                                </span>
+                            </a>
+                        @endforeach
+                        {{-- <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-users mr-2"></i> 8 friend requests
+                            <span class="float-right text-muted text-sm">12 hours</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-file mr-2"></i> 3 new reports
+                            <span class="float-right text-muted text-sm">2 days</span>
+                        </a>
+                        <div class="dropdown-divider"></div> --}}
+                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                    </div>
+                </li>
+            </ul>
         </nav>
         <!-- /.navbar -->
 
@@ -76,24 +121,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         @role('superadmin')
-                        <li class="nav-item">
-                            <a href="{{ url('dashboard/roles') }}" class="nav-link">
-                                <i class="nav-icon fas fa-user-cog"></i>
-                                <p>Roles</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('dashboard/permissions') }}" class="nav-link">
-                                <i class="nav-icon fas fa-user-cog"></i>
-                                <p>Permissions</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('dashboard/categories') }}" class="nav-link">
-                                <i class="nav-icon fas fa-list"></i>
-                                <p>Categories</p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{ url('dashboard/roles') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-user-cog"></i>
+                                    <p>Roles</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('dashboard/permissions') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-user-cog"></i>
+                                    <p>Permissions</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('dashboard/categories') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-list"></i>
+                                    <p>Categories</p>
+                                </a>
+                            </li>
                         @endrole
                         <li class="nav-item">
                             <a href="{{ url('dashboard/skills') }}" class="nav-link">

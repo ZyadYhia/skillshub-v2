@@ -5,6 +5,7 @@ namespace App\Http\Controllers\web;
 use App\Models\Exam;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Notifications\ExamFinished;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -86,6 +87,7 @@ class ExamController extends Controller
             'score' => $score,
             'time_mins' => $timeMins,
         ]);
+        $user->notify(new ExamFinished($user->name, $exam->name('en'), $points, $totalQuesNum));
         $request->session()->flash('success', "you finished exam successfuly with score: $score %");
         return redirect(url("exams/show/$examId"));
     }
