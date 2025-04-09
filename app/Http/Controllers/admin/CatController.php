@@ -7,6 +7,7 @@ use App\Models\Cat;
 use Illuminate\Http\Request;
 use App\Events\CatAddedEvent;
 use App\Events\CatToggleEvent;
+use App\Events\PusherEvent;
 use App\Http\Controllers\Controller;
 
 class CatController extends Controller
@@ -28,14 +29,14 @@ class CatController extends Controller
                 'ar' => $request->name_ar,
             ])
         ]);
-        $request->session()->flash('msg','row added successfully');
-        event(new CatAddedEvent("$request->name_en Category Added"));
+        $request->session()->flash('msg', 'row added successfully');
+        CatAddedEvent::dispatch("$request->name_en Category Added");
         return back();
     }
     public function update(Request $request)
     {
         $request->validate([
-            'id' =>'exists:cats,id',
+            'id' => 'exists:cats,id',
             'name_en' => 'required|string|max:50',
             'name_ar' => 'required|string|max:50',
         ]);
@@ -45,7 +46,7 @@ class CatController extends Controller
                 'ar' => $request->name_ar,
             ])
         ]);
-        $request->session()->flash('msg','row updated successfully');
+        $request->session()->flash('msg', 'row updated successfully');
         return back();
     }
     public function delete(Request $request, Cat $cat)
@@ -55,10 +56,10 @@ class CatController extends Controller
             $cat->delete();
             $msg = 'row deleted successfully';
         } catch (Exception $e) {
-            $msg ="row can't br deleted";
+            $msg = "row can't br deleted";
         }
-        $request->session()->flash('msg',$msg);
-        event(new CatAddedEvent("$catName Category was Deleted"));
+        $request->session()->flash('msg', $msg);
+        CatAddedEvent::dispatch("$catName Category Deleted");
         return  back();
     }
     public function toggle(Cat $cat)
@@ -67,7 +68,7 @@ class CatController extends Controller
             'active' => !$cat->active,
         ]);
         $catName = $cat->name('en');
-        event(new CatToggleEvent("$catName Category's status changed"));
+        CatToggleEvent::dispatch("$catName Category's status changed");
         return back();
     }
 }

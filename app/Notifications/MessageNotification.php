@@ -16,7 +16,6 @@ use Illuminate\Notifications\Slack\BlockKit\Composites\ConfirmObject;
 class MessageNotification extends Notification
 {
     use Queueable;
-    public string $receiver;
     public string $name;
     public string $email;
     public string $subject;
@@ -25,9 +24,8 @@ class MessageNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct( string $receiver,  string $name,  string $email, string $subject, string $body)
+    public function __construct(string $name,  string $email, string $subject, string $body)
     {
-        $this->receiver = $receiver;
         $this->name = $name;
         $this->email = $email;
         $this->subject = $subject;
@@ -117,7 +115,6 @@ class MessageNotification extends Notification
         $template = json_encode(['blocks' => $blocks], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
         return (new SlackMessage)
-            // ->to('#skillshub-app')
             ->usingBlockKitTemplate($template);
     }
 
@@ -147,7 +144,7 @@ class MessageNotification extends Notification
     {
         return (new MailMessage)
             ->subject($this->subject)
-            ->greeting('Hello ' . $this->receiver)
+            ->greeting('Hello ' . $notifiable->name)
             ->line('You have received a new message from ' . $this->name)
             ->line('Email: ' . $this->email)
             ->line('Message: ' . $this->body);
@@ -156,10 +153,10 @@ class MessageNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'name' => $notifiable->name,
-            'email' => $notifiable->email,
-            'subject' => $notifiable->subject,
-            'body' => $notifiable->body,
+            'name' => $this->name,
+            'email' => $this->email,
+            'subject' => $this->subject,
+            'body' => $this->body,
         ];
     }
 }

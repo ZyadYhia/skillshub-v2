@@ -112,7 +112,7 @@ class ExamController extends Controller
             'active' => 1,
         ]);
         $examName = $exam->name('en');
-        event(new ExamAddedEvent("$examName Exam Added Successfuly"));
+        ExamAddedEvent::dispatch("$examName Exam Added Successfuly");
 
         return redirect(url("dashboard/exams"));
     }
@@ -165,7 +165,7 @@ class ExamController extends Controller
             ]);
         }
         $examName = $exam->name('en');
-        event(new ExamToggleEvent("$examName Exam's status changed"));
+        ExamToggleEvent::dispatch("$examName Exam's status changed");
 
         return back();
     }
@@ -181,7 +181,7 @@ class ExamController extends Controller
         } catch (Exception $e) {
             $msg = "row can't br deleted";
         }
-        event(new ExamDeletedEvent("$examName Exam was Deleted"));
+        ExamDeletedEvent::dispatch("$examName Exam Deleted");
         $request->session()->flash('msg', $msg);
         return back();
     }
