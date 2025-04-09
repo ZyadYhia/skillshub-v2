@@ -39,7 +39,7 @@ class SkillController extends Controller
 
         ]);
         $request->session()->flash('msg', 'row added successfully');
-        event(new SkillAddedEvent("$request->name_en Skill Added Successfuly"));
+        SkillAddedEvent::dispatch("$request->name_en Skill Added Successfuly");
         return back();
     }
     public function delete(Request $request, Skill $skill)
@@ -54,7 +54,7 @@ class SkillController extends Controller
         }
         $request->session()->flash('msg', $msg);
         $skillName = $skill->name('en');
-        event(new SkillDeletedEvent("$skillName Skill was Deleted"));
+        SkillDeletedEvent::dispatch("$skillName Skill was Deleted");
         return  back();
     }
 
@@ -64,7 +64,7 @@ class SkillController extends Controller
             'active' => !$skill->active,
         ]);
         $skillName = $skill->name('en');
-        event(new SkillToggleEvent("$skillName Skill's status changed"));
+        SkillToggleEvent::dispatch("$skillName Skill's status changed");
         return back();
     }
 
